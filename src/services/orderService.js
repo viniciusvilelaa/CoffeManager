@@ -4,14 +4,17 @@ import prisma from '../db.js'
 export async function createOrder(data) {
     
     //Checking if data is correct
-    const { table, items } = data;
-    if (!table || !Array.isArray(items) || items.length === 0) {
+    const { table, orderItems } = data;
+    console.log(table,orderItems);
+    if (!table || !Array.isArray(orderItems) || orderItems.length === 0) {
         throw new Error("Dados invalidos: forneca mesa e items validos");
     }
 
     //Creating new array with items order ids
-    const productsId = items.map(i => i.productsId);
+    const productsId = orderItems.map(i => i.productId);
 
+    
+    console.log(productsId);
     //Creating array with products(name, price...)
     const products = await prisma.product.findMany({
         where: { id: { in: productsId } },
@@ -21,10 +24,10 @@ export async function createOrder(data) {
     let totalPrice = 0;
     
     //For each item in order data
-    const orderItemsData = items.map(item => {
+    const orderItemsData = orderItems.map(item => {
         
         //Find product with corresponding id
-        const product = products.find(p => p.id === items.productId);
+        const product = products.find(p => p.id === item.productId);
 
         //Check if product is valid
         if (!product) {
@@ -48,7 +51,6 @@ export async function createOrder(data) {
         data: {
             table,
             totalPrice,
-            status: PREPARANDO,
             orderItems: {
                 create: orderItemsData,
             },

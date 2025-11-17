@@ -11,7 +11,7 @@ export async function getProducts() {
 };
 
 //Update product
-export async function updateProduct(id, ){
+export async function updateProduct(id, data){
     //Verify product id
     const productId = Number(id);
     
@@ -38,7 +38,7 @@ export async function updateProduct(id, ){
 
 
     //Verify if product exists
-    const existingProduct = await prsima.product.findUnique({
+    const existingProduct = await prisma.product.findUnique({
         where: {id: productId },
     });
 
@@ -51,6 +51,6 @@ export async function updateProduct(id, ){
         where: {id: productId},
         data: filteredData,
     });
-    
+
     return updatedProduct;
 }

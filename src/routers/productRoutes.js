@@ -7,6 +7,6 @@ router.post("/", createProduct);
 
 router.get("/", getProducts);
 
-router.patch("/:id", updateProduct)
+router.put("/:id", updateProduct)
 
 export default router;

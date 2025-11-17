@@ -29,6 +29,7 @@ export async function getProducts(req, res, next) {
 export const updateProduct = async (req, res) => {
     const  id  = parseInt(req.params.id);
     const data = req.body;
+    
 
     try{
       const updatedProduct = await productService.updateProduct(id, data);

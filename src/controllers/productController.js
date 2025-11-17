@@ -24,3 +24,20 @@ export async function getProducts(req, res, next) {
     }
 }
 
+
+//HTTP REQUEST UPDATE
+export const updateProduct = async (req, res) => {
+    const  id  = parseInt(req.params.id);
+    const data = req.body;
+
+    try{
+      const updatedProduct = await productService.updateProduct(id, data);
+      res.status(201).json(updatedProduct);
+    } catch (error){
+      console.log("Error when updating product", error);
+      res.status(500).json({ error: error.message });
+    }
+
+
+}
+

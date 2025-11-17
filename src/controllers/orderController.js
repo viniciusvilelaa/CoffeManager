@@ -27,7 +27,7 @@ export const getOrders = async (req, res) => {
 
 //HTTP REQUEST UPDATE
 export const updateStatus = async (req, res) => {
-    const { id } = req.params;
+    const  id  = parseInt(req.params.id);
     const { status } = req.body;
 
     try {

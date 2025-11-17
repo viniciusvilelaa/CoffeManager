@@ -32,6 +32,11 @@ export async function createUser(data){
         }
     })
 
-    
 
+
+}
+
+// GET ALL USERS
+export async function getUsers(){
+    return prisma.user.findMany();
 }

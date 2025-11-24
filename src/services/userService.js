@@ -1,5 +1,8 @@
 import prisma from '../db.js'
 import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 //CREATE USER
 export async function createUser(data){
@@ -39,4 +42,30 @@ export async function createUser(data){
 // GET ALL USERS
 export async function getUsers(){
     return prisma.user.findMany();
+}
+
+export async function login(data){
+    const {username, password} = data;
+
+    const user = prisma.user.findUnique({
+        where: {username: username}
+    })
+
+    if(!user){
+        throw new Error("Please provide a valid username");
+    }
+
+    const isValidPassword = bcrypt.compare(password, User.password);
+
+    if(!isValidPassword){
+        throw new Error("Wrong password");
+    }
+
+   const token = jwt.sign(
+    {id: user._id, role: user.role},
+    JWT_SECRET,
+    {expiresIn: "1d"}
+   );
+
+   return { user, token};
 }

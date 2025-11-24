@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import productRoutes from "./routers/productRoutes.js"
 import orderRoutes from "./routers/orderRoute.js"
+import userRoutes from "./routers/userRoutes.js"
 
 //App general configuration
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
+app.use("/users", userRoutes);
 
 app.post("/debug", (req, res) => {
   console.log("DEBUG BODY:", req.body);
